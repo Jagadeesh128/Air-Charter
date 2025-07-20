@@ -1,0 +1,31 @@
+{# admin/user/booking_list.html.twig #}
+{% if value is not empty %}
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Flight</th>
+                <th>Seat Class</th>
+                <th>Status</th>
+                <th>Passenger Count</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for booking in value %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.flight }}</td>
+                <td>{{ booking.seatClass|capitalize }}</td>
+                <td>
+                    <span class="badge bg-{{ booking.status.value == 'CANCELLED' ? 'danger' : 'success' }}">
+                        {{ booking.status.value }}
+                    </span>
+                </td>
+                <td>{{ booking.passengers|length }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No bookings found for this user.</p>
+{% endif %}

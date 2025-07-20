@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+    <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
+        <div class="flex justify-center mb-6">
+            {# Optional Logo Placeholder #}
+            <img alt="Logo" class="w-auto" src="https://img.icons8.com/dotty/80/administrator-male.png" alt="Administrator"/>
+            <img >
+        </div>
+
+        <div class="text-center mb-4">
+            <h2 class="text-2xl font-bold text-gray-800">Welcome Back, Admin</h2>
+            <p class="text-sm text-gray-500">Please login to continue</p>
+        </div>
+
+        {% if error %}
+            <div class="mb-4 text-red-600 text-sm bg-red-100 border border-red-200 p-3 rounded">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
+
+        <form method="post" action="{{ path('admin_login') }}" class="space-y-5">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                <input type="email" id="email" name="email" value="{{ last_username }}"
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+                       required autofocus>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" name="password"
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+                       required>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="flex items-center justify-between">
+                <a href="#" class="text-sm text-indigo-600 hover:underline">Forgot password?</a>
+            </div>
+
+            <button type="submit"
+                    class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition font-semibold">
+                Sign In
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>

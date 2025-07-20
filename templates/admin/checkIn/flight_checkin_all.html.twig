@@ -1,0 +1,43 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}
+    Check-In All: Flight #{{ flight.id }}
+{% endblock %}
+
+{% block main %}
+    <form method="post">
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>Passenger</th>
+                    <th>Class</th>
+                    <th>Select Seat</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for passenger in passengers %}
+                    <tr>
+                        <td>{{ passenger.name }}</td>
+                        <td>{{ passenger.seatClass|capitalize }}</td>
+                        <td>
+                            <select name="seats[{{ passenger.id }}]" class="form-select">
+                                <option value="">-- Select Seat --</option>
+                                {% for seat in availableSeats[passenger.seatClass] %}
+                                    <option value="{{ seat }}"
+                                        {% if autoAssigned[passenger.id] is defined and autoAssigned[passenger.id] == seat %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        {{ seat }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-success">Confirm Check-In for All</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,11 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Air Charter Booking
+            description: Private Air Craft Booking Backend
+            version: 1.0.0
+    areas:
+        default:
+            path_patterns:
+                - ^/api(?!/doc$)      # Keep excluding /api/doc
+                - ^/api/token/refresh # Explicitly include this custom route

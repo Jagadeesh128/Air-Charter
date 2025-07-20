@@ -1,0 +1,91 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}
+    Check In: {{ passenger.name }}
+{% endblock %}
+
+{% block main %}
+    <div>
+        <p><strong>Booking Ref:</strong> {{ passenger.booking.id }}</p>
+        <p><strong>Check-In Code:</strong> {{ passenger.checkInCode }}</p>
+        <p><strong>Class:</strong> {{ passenger.seatClass|capitalize }}</p>
+    </div>
+
+    <form method="post" onsubmit="return validateSeatSelection();">
+        <h4>Select Seat ({{ passenger.seatClass|capitalize }})</h4>
+
+        <div class="seat-map">
+            {% for seat in availableSeats %}
+                <button type="button"
+                        class="seat-btn {{ passenger.seatClass }}"
+                        data-seat="{{ seat }}">{{ seat }}</button>
+            {% endfor %}
+        </div>
+
+        <input type="hidden" name="seat" id="selected-seat" required>
+        <input type="hidden" name="_token" value="{{ csrf_token('checkin') }}">
+
+        <button type="submit" class="btn btn-primary mt-3">Confirm Check-In</button>
+    </form>
+
+    <script>
+        document.querySelectorAll('.seat-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('selected-seat').value = btn.dataset.seat;
+                document.querySelectorAll('.seat-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+            });
+        });
+
+        function validateSeatSelection() {
+            const seat = document.getElementyById('selected-seat').value;
+            if(!seat) {
+                alert('Please select a seat before confirming check-in.');
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+
+    <style>
+        .seat-map {
+            display: grid;
+            grid-template-columns: repeat(4, 50px);
+            gap: 10px;
+            margin-top: 1em;
+        }
+
+        .seat-btn {
+            padding: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+            background: #f1f1f1;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s ease-in-out;
+            outline: none;
+        }
+
+        .seat-btn.business {
+            background-color: #bb2ff276;
+            color: #fff;
+        }
+
+        .seat-btn.economy {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+
+        .seat-btn.selected {
+            background-color: #007bff !important;
+            color: white;
+            border: 2px solid #0056b3;
+        }
+
+        .seat-btn:hover {
+            transform: scale(1.1);
+        }
+    </style>
+{% endblock %}

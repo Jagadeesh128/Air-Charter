@@ -1,0 +1,42 @@
+{# templates/admin/booking/seat_map_selector.html.twig #}
+
+{% block field_widget %}
+    {% set booking = ea.crud.currentEntityInstance %}
+    {% if booking and booking.flight and booking.flight.aircraft %}
+        <div style="font-family: monospace;">
+            <p>
+                <span style="display:inline-block;width:20px;height:20px;background:#28a745;margin-right:5px;"></span> Available &nbsp;
+                <span style="display:inline-block;width:20px;height:20px;background:#dc3545;margin-right:5px;"></span> Booked
+            </p>
+
+            {% set aircraft = booking.flight.aircraft %}
+            {% set capacity = aircraft.capacity %}
+            {% set bookedSeats = [] %}
+
+            {% for b in booking.flight.bookings %}
+                {% for p in b.passengers %}
+                    {% set bookedSeats = bookedSeats|merge([p.seatNumber]) %}
+                {% endfor %}
+            {% endfor %}
+
+            {% set seatLetters = ['A', 'B', 'C', 'D'] %}
+            {% set rows = (capacity / 4)|round(0, 'ceil') %}
+
+            {% for i in 1..rows %}
+                {% for j, letter in seatLetters %}
+                    {% set seat = i ~ letter %}
+                    {% set isBooked = seat in bookedSeats %}
+                    {% set color = isBooked ? '#dc3545' : '#28a745' %}
+                    {% set margin = j == 1 ? 'margin-right:30px;' : '' %}
+
+                    <span style="display:inline-block;width:30px;height:30px;margin:2px;{{ margin }}background:{{ color }};color:white;text-align:center;line-height:30px;border-radius:4px;">
+                        {{ seat }}
+                    </span>
+                {% endfor %}
+                <br>
+            {% endfor %}
+        </div>
+    {% else %}
+        <em>No flight or aircraft assigned.</em>
+    {% endif %}
+{% endblock %}
