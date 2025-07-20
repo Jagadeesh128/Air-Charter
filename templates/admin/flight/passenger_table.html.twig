@@ -1,28 +1,44 @@
 {% if field.value|length == 0 %}
     <div>No passengers found for this flight.</div>
 {% else %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Passenger Name</th>
-                <th>Age</th>
-                <th>Seat Number</th>
-                <th>Seat Class</th>
-                <th>Mobile Number</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for passenger in field.value %}
+    <div class="d-none d-md-block">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ passenger.name | capitalize }}</td>
-                    <td>{{ passenger.age }}</td>
-                    <td>{{ passenger.seatNumber }}</td>
-                    <td>{{ passenger.booking.seatClass|capitalize }}</td>
-                    <td>{{ passenger.booking.mobileNumber ?? 'N/A' }}</td>
+                    <th>#</th>
+                    <th>Passenger Name</th>
+                    <th>Age</th>
+                    <th>Seat Number</th>
+                    <th>Seat Class</th>
+                    <th>Mobile Number</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for passenger in field.value %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ passenger.name | capitalize }}</td>
+                        <td>{{ passenger.age }}</td>
+                        <td>{{ passenger.seatNumber }}</td>
+                        <td>{{ passenger.booking.seatClass|capitalize }}</td>
+                        <td>{{ passenger.booking.mobileNumber ?? 'N/A' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile-friendly card layout -->
+    <div class="d-block d-md-none">
+        {% for passenger in field.value %}
+            <div class="card mb-2">
+                <div class="card-body p-2">
+                    <h5 class="card-title mb-1">{{ loop.index }}. {{ passenger.name | capitalize }}</h5>
+                    <p class="mb-1"><strong>Age:</strong> {{ passenger.age }}</p>
+                    <p class="mb-1"><strong>Seat:</strong> {{ passenger.seatNumber }} ({{ passenger.booking.seatClass|capitalize }})</p>
+                    <p class="mb-0"><strong>Mobile:</strong> {{ passenger.booking.mobileNumber ?? 'N/A' }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endif %}

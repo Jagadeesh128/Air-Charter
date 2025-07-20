@@ -1,27 +1,47 @@
 {% set passengers = field.value %}
 {% if passengers is iterable and passengers|length > 0 %}
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Document ID</th>
-                <th>Seat</th>
-                <th>Class</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for passenger in passengers %}
+    
+    {# Desktop Table View #}
+    <div class="d-none d-md-block">
+        <table class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <td>{{ passenger.name }}</td>
-                    <td>{{ passenger.age }}</td>
-                    <td>{{ passenger.documentId }}</td>
-                    <td>{{ passenger.seatNumber }}</td>
-                    <td>{{ passenger.seatClass }}</td>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Document ID</th>
+                    <th>Seat</th>
+                    <th>Class</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for passenger in passengers %}
+                    <tr>
+                        <td>{{ passenger.name }}</td>
+                        <td>{{ passenger.age }}</td>
+                        <td>{{ passenger.documentId }}</td>
+                        <td>{{ passenger.seatNumber }}</td>
+                        <td>{{ passenger.seatClass }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {# Mobile Card View #}
+    <div class="d-block d-md-none">
+        {% for passenger in passengers %}
+            <div class="card mb-2">
+                <div class="card-body p-2">
+                    <h5 class="card-title mb-1">{{ passenger.name }}</h5>
+                    <p class="mb-1"><strong>Age:</strong> {{ passenger.age }}</p>
+                    <p class="mb-1"><strong>Document ID:</strong> {{ passenger.documentId }}</p>
+                    <p class="mb-1"><strong>Seat:</strong> {{ passenger.seatNumber }}</p>
+                    <p class="mb-0"><strong>Class:</strong> {{ passenger.seatClass }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 {% else %}
     <p>No passengers added.</p>
 {% endif %}

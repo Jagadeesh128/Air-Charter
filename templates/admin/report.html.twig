@@ -1,0 +1,82 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+    <div class="container-fluid px-3">
+         <h1><i class="fas fa-chart-line"></i> System Report</h1>
+
+        <div class="row mt-4">
+            <div class="col-md-4 mb-3">
+                <div class="card text-white bg-primary shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Users</h5>
+                        <p class="card-text display-6">{{ totalUsers }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div class="card text-white bg-success shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Bookings</h5>
+                        <p class="card-text display-6">{{ totalBookings }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div class="card text-white bg-info shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Flights</h5>
+                        <p class="card-text display-6">{{ totalFlights }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="card text-white bg-warning shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Bookings</h5>
+                        <p class="card-text display-6">{{ activeBookings }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="card text-white bg-danger shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Cancelled Bookings</h5>
+                        <p class="card-text display-6">{{ cancelledBookings }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="card text-white bg-info-subtle shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Passengers</h5>
+                        <p class="card-text display-6">{{ totalPassengers }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="card text-white bg-black shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Routes</h5>
+                        <p class="card-text display-6">{{ totalRoutes }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="card text-white bg-primary-subtle shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Aircrafts</h5>
+                        <p class="card-text display-6">{{ totalAircrafts }}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

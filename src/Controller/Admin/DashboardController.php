@@ -21,7 +21,8 @@ class DashboardController extends AbstractDashboardController
 {
     public function __construct(
         private AdminUrlGenerator $adminUrlGenerator
-    ) {}
+    ) {
+    }
 
     #[Route('/admin', name: 'admin')]
     public function index(): Response
@@ -49,5 +50,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Bookings', 'fa fa-book', Booking::class);
         yield MenuItem::linkToCrud('Flight', 'fa fa-calendar-days', Flight::class);
         yield MenuItem::linkToCrud('Passengers', 'fas fa-user-friends', Passenger::class);
+        yield MenuItem::linkToRoute('System Report', 'fas fa-chart-line', 'admin_system_report');
     }
 }
