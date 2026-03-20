@@ -1,11 +1,10 @@
-version: '3.8'
-
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: symfony_app
+    user: "1000:1000"
     volumes:
       - ./:/var/www/html
     ports:
@@ -13,7 +12,8 @@ services:
     depends_on:
       - database
     environment:
-      DATABASE_URL: "mysql://symfonyuser:symfony_password@database:3307/air_charter_db?serverVersion=8.0"
+      HOME: /home/dev   # ✅ fixes VS Code issue
+      DATABASE_URL: "mysql://symfonyuser:symfony_password@symfony_db:3306/air_charter_db?serverVersion=8.0"
 
   database:
     image: mysql:8.0

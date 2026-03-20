@@ -3,8 +3,8 @@ FROM php:8.2-apache
 
 # Install PHP extensions (for MySQL and Symfony)
 RUN apt-get update && apt-get install -y \
-    git unzip zip curl libpq-dev libzip-dev \
-    && docker-php-ext-install pdo pdo_mysql
+    git unzip zip curl libpq-dev libzip-dev libicu-dev \
+    && docker-php-ext-install pdo pdo_mysql intl
 
 # ✅ Enable Apache mod_rewrite (Symfony routing requires this)
 RUN a2enmod rewrite
