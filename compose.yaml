@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: symfony_app
     volumes:
       - ./:/var/www/html
@@ -10,6 +12,8 @@ services:
       - "8000:80"
     depends_on:
       - database
+    environment:
+      DATABASE_URL: "mysql://symfonyuser:symfony_password@database:3307/air_charter_db?serverVersion=8.0"
 
   database:
     image: mysql:8.0

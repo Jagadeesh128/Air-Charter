@@ -1,16 +1,22 @@
+# Use PHP with Apache
 FROM php:8.2-apache
 
-# Install system dependencies, PDO MySQL, and other PHP extensions Symfony/MySQL apps need
-RUN docker-php-ext-install pdo pdo_mysql
+# Install PHP extensions (for MySQL and Symfony)
+RUN apt-get update && apt-get install -y \
+    git unzip zip curl libpq-dev libzip-dev \
+    && docker-php-ext-install pdo pdo_mysql
 
-# (Optional) Install other extensions you might use
-# RUN docker-php-ext-install intl zip opcache
-
-# Enable Apache mod_rewrite (often needed for Symfony)
+# ✅ Enable Apache mod_rewrite (Symfony routing requires this)
 RUN a2enmod rewrite
 
-# Set the working directory
+# ✅ Install Composer globally (official way)
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Set working directory
 WORKDIR /var/www/html
 
-# Copy custom Apache configuration (host path must exist BEFORE build)
+# (Optional but recommended) Copy your Apache vhost config
 COPY apache/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+# Expose port 80
+EXPOSE 80
